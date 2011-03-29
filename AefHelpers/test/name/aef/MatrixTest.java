@@ -28,7 +28,18 @@ public class MatrixTest {
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-    
+
+    @Test
+    public void testVerticalVector() {
+        Matrix vector = Matrix.verticalVector(new Double[]{7.0, 3.5, 4.0});
+
+        assertEquals(1, vector.getWidth());
+        assertEquals(3, vector.getHeight());
+        assertEquals(new Double(7.0), (Double)vector.get(0, 0));
+        assertEquals(new Double(3.5), (Double)vector.get(0, 1));
+        assertEquals(new Double(4.0), (Double)vector.get(0, 2));
+    }
+
     @Test
     public void testMatrixMultiplication() {
         Matrix left  = new Matrix<Double>(2, 2);
@@ -40,9 +51,7 @@ public class MatrixTest {
         System.out.format("Left matrix (Width: %d; Height: %d):\n", left.getWidth(), left.getHeight());
         System.out.println(left);
 
-        Matrix right = new Matrix<Double>(1, 2);
-        right.set(0, 0, 5.5);
-        right.set(0, 1, 2.0);
+        Matrix right = Matrix.verticalVector(new Double[]{5.5, 2.0});
         
         System.out.format("Right matrix (Width: %d; Height: %d):\n", right.getWidth(), right.getHeight());
         System.out.println(right);
@@ -86,7 +95,7 @@ public class MatrixTest {
     }
 
     @Test
-    public void testBigMultiplication() {
+    public void testMatrixMultiplicationBig() {
         Matrix translation = new Matrix<Double>(3, 3);
 
         translation.set(0, 0, 1.0);
@@ -129,6 +138,7 @@ public class MatrixTest {
         assertEquals(new Double(3.0), result.get(2, 1));
         assertEquals(new Double(1.0), result.get(2, 2));
     }
+
 
     @Before
     public void setUp() {

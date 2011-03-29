@@ -11,6 +11,29 @@ package name.aef;
  */
 public class Matrix<T> {
 
+    /**
+     * Creates a vertical vector with the given values
+     *
+     * @param values Values for the vertical vector
+     * @return A vertical vector
+     */
+    public static Matrix<Double> verticalVector(Double[] values) {
+        Matrix vector = new Matrix<Double>(1, values.length);
+
+        for (int i = 0; i < values.length; i++) {
+            vector.set(0, i, values[i]);
+        }
+
+        return vector;
+    }
+
+    /**
+     * Builds a translation matrix for 2-dimensional points
+     *
+     * @param x Translation on the x-axis
+     * @param y Translation on the y-axis
+     * @return A 2x2 translation matrix for 2-dimensional points
+     */
     public static Matrix<Double> translate2D(Double x, Double y) {
         Matrix rotateMatrix = new Matrix<Double>(1, 2);
 
@@ -20,6 +43,13 @@ public class Matrix<T> {
         return rotateMatrix;
     }
 
+    /**
+     * Builds a translation matrix for 2-dimensional points in 3-dimensional space
+     *
+     * @param x Translation on the x-axis
+     * @param y Translation on the y-axis
+     * @return A 3x3 translation matrix for 2-dimensional points
+     */
     public static Matrix<Double> translate2Don3D(Double x, Double y) {
         Matrix translationMatrix = new Matrix<Double>(3, 3);
 
@@ -38,6 +68,13 @@ public class Matrix<T> {
         return translationMatrix;
     }
 
+    /**
+     * Builds a scaling matrix for 2-dimensional points
+     *
+     * @param x Scaling factor on the x-axis
+     * @param y Scaling factor on the y-axis
+     * @return A 2x2 scaling matrix for 2-dimensional points
+     */
     public static Matrix<Double> scale2D(Double x, Double y) {
         Matrix scaleMatrix = new Matrix<Double>(2, 2);
 
@@ -49,6 +86,12 @@ public class Matrix<T> {
         return scaleMatrix;
     }
 
+    /**
+     * Builds a rotation matrix for 2-dimensional points
+     *
+     * @param angle The radians angle for the rotation
+     * @return A 2x2 rotation matrix for 2-dimensional points
+     */
     public static Matrix<Double> rotate2D(Double angle) {
         Matrix rotateMatrix = new Matrix<Double>(2, 2);
 
@@ -60,6 +103,12 @@ public class Matrix<T> {
         return rotateMatrix;
     }
 
+    /**
+     * Builds a z-axis rotation matrix for 3-dimensional points
+     *
+     * @param angle The radians angle for the rotation
+     * @return A 3x3 z-axis rotation matrix for 3-dimensional points
+     */
     public static Matrix<Double> rotateZ3D(Double angle) {
         Matrix rotateMatrix = new Matrix<Double>(3, 3);
 
@@ -78,6 +127,12 @@ public class Matrix<T> {
         return rotateMatrix;
     }
 
+    /**
+     * Converts a 2-dimensional vector to a 3-dimensional vector
+     *
+     * @param vector2D The 2-dimensional vector
+     * @return A 3-dimensional vector generated from the 2-dimensional vector with z set to 1
+     */
     public static Matrix transferVectorTo3D(Matrix vector2D) {
         if (vector2D.width != 1 && vector2D.height != 2) {
             throw new RuntimeException("Only 2D vectors can be transfered to 3D");
@@ -91,6 +146,12 @@ public class Matrix<T> {
         return result;
     }
 
+    /**
+     * Converts a 3-dimensional vector to a 2-dimensional vector
+     *
+     * @param vector3D The 3-dimensional vector
+     * @return A 2-dimensional vector generated from the 2-dimensional vector with z removed
+     */
     public static Matrix transferVectorTo2D(Matrix vector3D) {
         if (vector3D.width != 1 && vector3D.height != 3) {
             throw new RuntimeException("Only 3D vectors can be transfered to 2D");
@@ -185,13 +246,19 @@ public class Matrix<T> {
         return true;
     }
 
+    /**
+     * Builds a string representation of the matrix
+     *
+     * @return String representation of the matrix
+     */
+    @Override
     public String toString() {
         String output = "";
         
         for (int y = 0; y < height; y++) {
 
             for (int x = 0; x < width; x++) {
-                output += String.format(" %03.2f ", (Double)get(x, y));
+                output += String.format(" %.2f ", (Double)get(x, y));
             }
             
             output += "\n";
@@ -200,6 +267,14 @@ public class Matrix<T> {
         return output;
     }
 
+    /**
+     * Multiplies the matrix with a given other matrix
+     *
+     * FIXME: Currently only works for Double elements
+     *
+     * @param other Another matrix
+     * @return The product matrix
+     */
     public Matrix multiply(Matrix other) {
         if (width != other.getHeight()) {
             throw new RuntimeException("Matrix multiplication only possible if the left Matrix' width is equal to the right Matrix' height");
@@ -227,6 +302,14 @@ public class Matrix<T> {
         return result;
     }
 
+    /**
+     * Adds another matrix onto the matrix
+     *
+     * FIXME: Currently only works for Double elements
+     *
+     * @param other Another matrix
+     * @return The sum matrix
+     */
     public Matrix add(Matrix other) {
         if (width  != other.getWidth() ||
             height != other.getHeight()) {

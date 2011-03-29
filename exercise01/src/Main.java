@@ -1,3 +1,4 @@
+import name.aef.Rectangle;
 import name.aef.*;
 
 public class Main {
@@ -6,23 +7,13 @@ public class Main {
     }
 
     public static void complex3DTests() {
-        Matrix topLeft = new Matrix<Double>(1, 2);
-        topLeft.set(0, 0, 2.0);
-        topLeft.set(0, 1, 2.0);
+        Rectangle rectangle = new Rectangle(
+            Matrix.verticalVector(new Double[]{2.0, 2.0}), // Top left
+            Matrix.verticalVector(new Double[]{4.0, 2.0}), // Top right
+            Matrix.verticalVector(new Double[]{4.0, 4.0}), // Bottom left
+            Matrix.verticalVector(new Double[]{2.0, 4.0})  // Bottom right
+        );
 
-        Matrix topRight = new Matrix<Double>(1, 2);
-        topRight.set(0, 0, 4.0);
-        topRight.set(0, 1, 2.0);
-
-        Matrix bottomLeft = new Matrix<Double>(1, 2);
-        bottomLeft.set(0, 0, 4.0);
-        bottomLeft.set(0, 1, 4.0);
-
-        Matrix bottomRight = new Matrix<Double>(1, 2);
-        bottomRight.set(0, 0, 2.0);
-        bottomRight.set(0, 1, 4.0);
-
-        Rectangle rectangle = new Rectangle(topLeft, topRight, bottomLeft, bottomRight);
         System.out.println("Original rectangle:\n" + rectangle + "\n");
 
         Matrix translation = Matrix.translate2Don3D(3.0, 3.0);
@@ -35,23 +26,13 @@ public class Main {
     }
 
     public static void simple2DTests() {
-        Matrix topLeft = new Matrix<Double>(1, 2);
-        topLeft.set(0, 0, 0.0);
-        topLeft.set(0, 1, 1.0);
-
-        Matrix topRight = new Matrix<Double>(1, 2);
-        topRight.set(0, 0, 1.0);
-        topRight.set(0, 1, 1.0);
-
-        Matrix bottomLeft = new Matrix<Double>(1, 2);
-        bottomLeft.set(0, 0, 0.0);
-        bottomLeft.set(0, 1, 0.0);
-
-        Matrix bottomRight = new Matrix<Double>(1, 2);
-        bottomRight.set(0, 0, 1.0);
-        bottomRight.set(0, 1, 0.0);
-
-        Rectangle rectangle = new Rectangle(topLeft, topRight, bottomLeft, bottomRight);
+        Rectangle rectangle = new Rectangle(
+            Matrix.verticalVector(new Double[]{0.0, 1.0}),
+            Matrix.verticalVector(new Double[]{1.0, 1.0}),
+            Matrix.verticalVector(new Double[]{0.0, 0.0}),
+            Matrix.verticalVector(new Double[]{0.0, 1.0})
+        );
+        
         System.out.println("Original rectangle:\n" + rectangle + "\n");
 
         translateTest(rectangle);
